@@ -49,5 +49,5 @@ El relevamiento alcanzará a:
 ---
 ### Diccionario de datos
 
-Enlace:
+Enlace: [Diccionario de datos](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/blob/main/doc/diccionario_datos.pdf)
 
