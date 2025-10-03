@@ -44,7 +44,7 @@ El relevamiento alcanzará a:
 ---
 ### Diagrama Relacional
 
-![erdplus (3).png](attachment:608d6300-accb-47aa-9564-78fc481f64f3:erdplus_(3).png)
+![erdplus (3).png](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/blob/main/doc/erdplus.png)
 
 ---
 ### Diccionario de datos
