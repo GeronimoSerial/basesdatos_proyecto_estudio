@@ -1,4 +1,4 @@
-# Primera Entrega
+# Proyecto - Bases de datos I
 
 ## Integrantes:
 
