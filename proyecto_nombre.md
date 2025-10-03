@@ -1,103 +1,53 @@
-# Proyecto de Estudio!
-    
-**Estructura del documento principal:**
+# Primera Entrega
 
-# PRESENTACIÓN (Título/Nombre Proyecto)
+## Integrantes:
 
-**Asignatura**: Bases de Datos I (FaCENA-UNNE)
+- Serial Geronimo
+- Escalante Marcelo
+- Lago Matias
+- Barrios Lucas
 
-**Integrantes**:
- - Sed vel lectus nec lectus placerat laoreet et sed est.
- - Sed ac justo ac mauris porttitor convallis non sit amet felis.
- - In tincidunt augue sed molestie malesuada.
+## Capítulo I:
 
-**Año**: 2024
+### Descripción del trabajo: Relevamiento Anual.
 
-## CAPÍTULO I: INTRODUCCIÓN
+El trabajo de relevamiento consiste en la recopilación y sistematización de información de todas las instituciones educativas de la provincia correspondientes a los niveles Inicial, Primario y de Adultos, bajo la jurisdicción del Consejo General de Educación. La carga se realizará mediante un formulario digital único y obligatorio, donde cada escuela deberá completar datos institucionales y de funcionamiento definidos previamente. Se excluye la información de matrícula.
 
-### Caso de estudio
+---
 
-Maecenas molestie lacus tincidunt, placerat dolor et, ullamcorper erat. Mauris tortor nisl, ultricies ac scelerisque nec, feugiat in nibh. 
+### Problemática actual:
 
-### Definición o planteamiento del problema
+Actualmente, la carga de datos se realiza a través de formularios de Google Forms. Este método presenta limitaciones: cada año las escuelas deben volver a cargar la totalidad de la información desde cero, lo que genera redundancia, mayores posibilidades de error y un uso ineficiente del tiempo de los responsables. Con la nueva implementación, el sistema permitirá mantener un registro histórico único y persistente por institución, donde solo deberán actualizarse los datos que hayan cambiado en el transcurso del año, reduciendo significativamente la carga administrativa y mejorando la consistencia de la información.
 
-Pellentesque interdum aliquam magna sit amet rutrum. Nulla aliquam ligula nec quam iaculis dictum. In cursus aliquam cursus. Nullam a sem vel sapien iaculis finibus. Donec aliquam dictum viverra. Etiam ut orci lacus.
+---
 
-## CAPITULO II: MARCO CONCEPTUAL O REFERENCIAL
+### Alcance:
 
-**TEMA 1 " ---- "** 
-Ut sed imperdiet risus. Maecenas vestibulum arcu vitae orci pretium pharetra. Suspendisse potenti. Fusce massa libero, fermentum eget elit in, tincidunt fermentum nunc. Cras imperdiet nisl elit, elementum gravida enim accumsan vel. Sed in sapien quis ante consectetur commodo id non nulla. Aenean lacinia, dolor convallis semper mattis, ante orci elementum nunc, eget feugiat risus neque in urna. Ut ut quam nec risus mollis convallis ornare ac odio. Phasellus efficitur posuere nibh, eget tempor augue pellentesque ac. Ut enim sem, imperdiet non est ut, blandit posuere dui. Curabitur at purus orci. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+El relevamiento alcanzará a:
 
+- La totalidad de las instituciones educativas de los niveles mencionados.
+- Un único envío por escuela, a cargo del directivo o responsable designado.
+- La obligatoriedad de completar todos los campos requeridos en el formulario.
+- La centralización de la información en una base única para control y validación.
+- La disponibilidad de los datos para tareas de planificación, seguimiento y gestión administrativa en el Ministerio de Educación.
 
-**TEMA 2 " ----- "** 
-Ut sed imperdiet risus. Maecenas vestibulum arcu vitae orci pretium pharetra. Suspendisse potenti. Fusce massa libero, fermentum eget elit in, tincidunt fermentum nunc. Cras imperdiet nisl elit, elementum gravida enim accumsan vel. Sed in sapien quis ante consectetur commodo id non nulla. Aenean lacinia, dolor convallis semper mattis, ante orci elementum nunc, eget feugiat risus neque in urna. Ut ut quam nec risus mollis convallis ornare ac odio. Phasellus efficitur posuere nibh, eget tempor augue pellentesque ac. Ut enim sem, imperdiet non est ut, blandit posuere dui. Curabitur at purus orci. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+---
 
-...
+### Beneficios esperados
 
-## CAPÍTULO III: METODOLOGÍA SEGUIDA 
+- Reducción de la carga administrativa: las escuelas no deberán volver a cargar toda la información año tras año, solo actualizar los cambios.
+- Mayor consistencia y trazabilidad: la información histórica se conserva y puede ser auditada.
+- Disminución de errores: al evitar la carga completa anual, se reducen los problemas de duplicación, omisiones o inconsistencias.
+- Estandarización de datos: todas las instituciones trabajan con un mismo formulario y estructura de información.
+- Agilidad operativa: el Ministerio de Educación cuenta con información consolidada y validada en menor tiempo, facilitando la planificación y asignación de recursos.
 
-Donec lobortis tincidunt erat, non egestas mi volutpat in. Cras ante purus, luctus sed fringilla non, ullamcorper at eros.
+---
+### Diagrama Relacional
 
- **a) Cómo se realizó el Trabajo Práctico**
-Vestibulum rutrum feugiat molestie. Nunc id varius augue. Ut augue mauris, venenatis et lacus ut, mattis blandit urna. Fusce lobortis, quam non vehicula scelerisque, nisi enim ultrices diam, ac tristique libero ex nec orci.
+![erdplus (3).png](attachment:608d6300-accb-47aa-9564-78fc481f64f3:erdplus_(3).png)
 
- **b) Herramientas (Instrumentos y procedimientos)**
-Donec lobortis tincidunt erat, non egestas mi volutpat in. Cras ante purus, luctus sed fringilla non, ullamcorper at eros. Integer interdum id orci id rutrum. Curabitur facilisis lorem sed metus interdum accumsan. 
-
-
-## CAPÍTULO IV: DESARROLLO DEL TEMA / PRESENTACIÓN DE RESULTADOS 
-
-Maecenas molestie lacus tincidunt, placerat dolor et, ullamcorper erat. Mauris tortor nisl, ultricies ac scelerisque nec, feugiat in nibh. Pellentesque interdum aliquam magna sit amet rutrum. 
-
-
-
-### Diagrama conceptual (opcional)
-Ejemplo usando Live Editor https://mermaid.js.org/ (ejemplo opcional)
-```mermaid
-erDiagram
-CUSTOMER  }|..|{  DELIVERY-ADDRESS  : has
-CUSTOMER  ||--o{  ORDER  : places
-CUSTOMER  ||--o{  INVOICE  : "liable for"
-DELIVERY-ADDRESS  ||--o{  ORDER  : receives
-INVOICE  ||--|{  ORDER  : covers
-ORDER  ||--|{  ORDER-ITEM  : includes
-PRODUCT-CATEGORY  ||--|{  PRODUCT  : contains
-PRODUCT  ||--o{  ORDER-ITEM  : "ordered in"
-```
-### Diagrama relacional
-![diagrama_relacional](https://github.com/dovillegas/basesdatos_proyecto_estudio/blob/main/doc/image_relational.png)
-
+---
 ### Diccionario de datos
 
-Acceso al documento [PDF](doc/diccionario_datos.pdf) del diccionario de datos.
-
-
-### Desarrollo TEMA 1 "----"
-
-Fusce auctor finibus lectus, in aliquam orci fermentum id. Fusce sagittis lacus ante, et sodales eros porta interdum. Donec sed lacus et eros condimentum posuere. 
-
-> Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema_1](script/tema01_nombre_tema)
-
-### Desarrollo TEMA 2 "----"
-
-Proin aliquet mauris id ex venenatis, eget fermentum lectus malesuada. Maecenas a purus arcu. Etiam pellentesque tempor dictum. 
-
-> Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema_2](script/tema02_nombre_tema)
-
-... 
-
-
-## CAPÍTULO V: CONCLUSIONES
-
-Nunc sollicitudin purus quis ante sodales luctus. Proin a scelerisque libero, vitae pharetra lacus. Nunc finibus, tellus et dictum semper, nisi sem accumsan ligula, et euismod quam ex a tellus. 
-
-
-
-## BIBLIOGRAFÍA DE CONSULTA
-
- 1. List item
- 2. List item
- 3. List item
- 4. List item
- 5. List item
+Enlace:
 
