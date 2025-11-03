@@ -41,3 +41,48 @@ BEGIN
   WHERE dni = @DNI;
 END;
 GO
+
+--insertar una escuela
+CREATE PROCEDURE insertarEscuela
+  @CUE INT,
+  @Nombre VARCHAR(100),
+  @Telefono NUMERIC(20,0),
+  @Mail VARCHAR(100),
+  @IdServComida INT,
+  @IdCategoria INT,
+  @IdZona INT,
+  @IdModalidad INT,
+  @IdTurno INT
+AS
+BEGIN
+  INSERT INTO institucional.escuela (cue, nombre, telefono, mail, id_serv_comida, 
+  id_categoria, id_zona, id_modalidad, id_turno)
+  VALUES (@CUE, @Nombre, @Telefono, @Mail, @IdServComida,
+  @IdCategoria, @IdZona, @IdModalidad, @IdTurno);
+END;
+GO
+
+--modificar una escuela
+CREATE PROCEDURE modificarEscuela
+  @CUE INT,
+  @NuevoTelefono NUMERIC(20,0),
+  @NuevoMail VARCHAR(100)
+AS
+BEGIN
+  UPDATE institucional.escuela
+  SET telefono = @NuevoTelefono,
+      mail = @NuevoMail,
+      updated_at = GETDATE()
+  WHERE cue = @CUE;
+END;
+GO
+
+--borrar una escuela
+CREATE PROCEDURE borrarEscuela
+  @CUE INT
+AS
+BEGIN
+  DELETE FROM institucional.escuela
+  WHERE cue = @CUE;
+END;
+GO
