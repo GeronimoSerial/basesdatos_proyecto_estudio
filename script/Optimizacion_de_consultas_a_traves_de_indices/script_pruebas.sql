@@ -177,6 +177,6 @@ DBCC FREEPROCCACHE;
 DBCC DROPCLEANBUFFERS;
 
 
--- Este comando restauraría la PK como el índice agrupado
+
 ALTER TABLE rrhh.persona 
 ADD CONSTRAINT pk_persona PRIMARY KEY (id_persona);
