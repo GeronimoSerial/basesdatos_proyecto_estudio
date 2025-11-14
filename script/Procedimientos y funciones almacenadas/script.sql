@@ -124,3 +124,41 @@ BEGIN
   WHERE id_problematica = @IdProblematica AND id_escuela = @IdEscuela;
 END;
 GO
+
+CREATE PROCEDURE insertarProgramaAcompanamiento
+  @Descripcion VARCHAR(100)
+AS
+BEGIN
+  INSERT INTO programas.programa_acompanamiento (descripcion)
+  VALUES (@Descripcion);
+END;
+GO
+
+-- Procedimiento para asignar programa a una escuela
+CREATE PROCEDURE asignarProgramaEscuela
+  @IdPrograma INT,
+  @IdEscuela INT
+AS
+BEGIN
+  -- Verificar que no exista la relacion
+  IF NOT EXISTS (SELECT 1 FROM programas.escuela_programa 
+                 WHERE id_programa = @IdPrograma 
+                   AND id_escuela = @IdEscuela)
+  BEGIN
+    INSERT INTO programas.escuela_programa (id_programa, id_escuela)
+    VALUES (@IdPrograma, @IdEscuela);
+  END
+END;
+GO
+
+-- Procedimiento para eliminar programa de una escuela
+CREATE PROCEDURE quitarProgramaEscuela
+  @IdPrograma INT,
+  @IdEscuela INT
+AS
+BEGIN
+  DELETE FROM programas.escuela_programa
+  WHERE id_programa = @IdPrograma 
+    AND id_escuela = @IdEscuela;
+END;
+GO
