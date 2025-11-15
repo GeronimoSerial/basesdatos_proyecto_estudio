@@ -6,8 +6,6 @@ TAREA 1: SCRIPT DE CARGA AUTOMATIZADA (1 MILLÓN DE FILAS) EN LA TABLA rrhh.pers
 
 -- Desactiva el mensaje "filas afectadas" para acelerar
 SET NOCOUNT ON; 
-            
-PRINT 'Creando listas de nombres y apellidos...';
 
 -- Tabla temporal de Nombres
 DECLARE @Nombres TABLE (id INT IDENTITY(1,1) PRIMARY KEY, nombre VARCHAR(50));
@@ -78,8 +76,6 @@ END
 COMMIT TRANSACTION;
             
 SET NOCOUNT OFF;
-            
-PRINT '¡Carga de 1 millón de registros completada!';
 
 -- Verificamos el conteo final
 SELECT COUNT(*) AS TotalFilas_En_rrhh_persona FROM rrhh.persona;
