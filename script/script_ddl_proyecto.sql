@@ -1,6 +1,3 @@
-CREATE DATABASE Proyecto_final_2025;
-USE Proyecto_final_2025;
-
 -- =========================
 -- GEOGRAFÍA
 -- =========================
