@@ -200,3 +200,72 @@ GO
 DELETE FROM relevamiento.escuela_info_json 
 WHERE JSON_VALUE(info_relevamiento, '$.Temporal') = 'true';
 GO
+
+--TAREA 3: Consultas sobre datos JSON
+
+-- Consulta 1: Extraer un campo especifico con JSON_VALUE
+SELECT 
+    id_escuela,
+    JSON_VALUE(info_relevamiento, '$.Nombre') AS Nombre_Escuela,
+    JSON_VALUE(info_relevamiento, '$.Estado_Edilicio') AS Estado
+FROM relevamiento.escuela_info_json
+WHERE anio = 2024;
+GO
+
+-- Consulta 2: Extraer multiples campos del JSON
+SELECT	
+    JSON_VALUE(info_relevamiento, '$.Nombre') AS Escuela, 
+    JSON_VALUE(info_relevamiento, '$.Zona') AS Zona,
+    JSON_VALUE(info_relevamiento, '$.Conectividad.Velocidad_Mbps') AS Velocidad_Internet,
+    JSON_VALUE(info_relevamiento, '$.Conectividad.Tipo') AS Tipo_Conexion
+FROM relevamiento.escuela_info_json
+WHERE ISJSON(info_relevamiento) > 0;
+GO
+
+-- Consulta 3: Filtrar por valores dentro del JSON
+SELECT	
+    JSON_VALUE(info_relevamiento, '$.Nombre') AS Escuela,
+    JSON_VALUE(info_relevamiento, '$.Infraestructura.Total_Aulas') AS Aulas
+FROM relevamiento.escuela_info_json
+WHERE TRY_CAST(JSON_VALUE(info_relevamiento, '$.Infraestructura.Total_Aulas') AS INT) >= 12;
+GO
+
+-- Observar el plan de ejecucion (Index Scan - no optimizado)
+SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
+
+SELECT	
+    JSON_VALUE(info_relevamiento, '$.Nombre') AS Escuela
+FROM relevamiento.escuela_info_json
+WHERE JSON_VALUE(info_relevamiento, '$.Zona') = 'Zona A - Urbana Central'
+  AND TRY_CAST(JSON_VALUE(info_relevamiento, '$.Conectividad.Velocidad_Mbps') AS INT) >= 100;
+
+SET STATISTICS IO OFF;
+SET STATISTICS TIME OFF;
+GO
+
+--Observamos en el plan de ejecucion que se realiza un Index Scan (tabla completa)
+
+-- Consulta 4: Extraer array completo con JSON_QUERY
+SELECT 
+    id_escuela,
+    JSON_QUERY(info_relevamiento, '$.Infraestructura') AS Info_Infraestructura,
+    JSON_QUERY(info_relevamiento, '$.Conectividad') AS Info_Conectividad
+FROM relevamiento.escuela_info_json;
+GO
+
+-- Consulta 5: Expandir array JSON con OPENJSON
+SELECT 
+    ej.id_escuela,
+    proyecto.Nombre AS Proyecto,
+    proyecto.Participantes,
+    proyecto.Presupuesto
+FROM relevamiento.escuela_info_json ej
+CROSS APPLY OPENJSON(info_relevamiento, '$.Proyectos')
+    WITH (
+        Nombre NVARCHAR(100) '$.Nombre',
+        Participantes INT '$.Participantes',
+        Presupuesto INT '$.Presupuesto'
+    ) AS proyecto
+WHERE ISJSON(info_relevamiento) > 0;
+GO
