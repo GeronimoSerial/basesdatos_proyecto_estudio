@@ -1,21 +1,33 @@
-## Tema: Optimización de consultas a través de índices
+# Investigación: Impacto de Índices en SQL Server sobre 1 Millón de Registros
 
-### Objetivos de Aprendizaje:
+## 1. Introducción
 
-- Conocer los tipos de índices y sus aplicaciones.
-- Evaluar el impacto de los índices en el rendimiento de las consultas.
+El objetivo de este proyecto fue analizar y cuantificar el impacto en el rendimiento de diferentes estrategias de indexación en SQL Server. [cite_start]Para ello, se realizaron pruebas de consulta sobre una tabla poblada con un gran volumen de datos (1 millón de registros)[cite: 2, 3], simulando un escenario realista donde la optimización de consultas es fundamental.
 
-### Criterios de Evaluación:
+## 2. Configuración del Entorno de Pruebas
 
-- Medición correcta de los tiempos de respuesta antes y después de aplicar índices.
-- Documentación detallada de los planes de ejecución de las consultas.
-- Evaluación de la mejora en el rendimiento.
+### 2.1. Definición de la Tabla
 
-### Tareas:
+[cite_start]Se utilizó la tabla `rrhh.persona`[cite: 4]. La estructura inicial se creó con el siguiente script:
 
-- Realizar una carga masiva de por lo menos un millón de registro sobre alguna tabla que contenga un campo fecha (sin índice). Hacerlo con un script para poder automatizarlo.
-- Realizar una búsqueda por periodo y registrar el plan de ejecución utilizado por el motor y los tiempos de respuesta.
-- Definir un índice agrupado sobre la columna fecha y repetir la consulta anterior. Registrar el plan de ejecución utilizado por el motor y los tiempos de respuesta.
-- Borrar el índice creado
-- Definir otro índice agrupado sobre la columna fecha pero que además incluya las columnas seleccionadas y repetir la consulta anterior. Registrar el plan de ejecución utilizado por el motor y los tiempos de respuesta.
-- Expresar las conclusiones en base a las pruebas realizadas.
+```sql
+CREATE TABLE rrhh.persona (
+    id_persona INT IDENTITY(1,1) NOT NULL,
+    dni INT NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    telefono NUMERIC(20) NOT NULL,
+    mail VARCHAR(100) NOT NULL,
+    CONSTRAINT pk_persona PRIMARY KEY (id_persona),
+    CONSTRAINT uq_persona_dni UNIQUE (dni),
+    CONSTRAINT uq_persona_mail UNIQUE (mail),
+    CONSTRAINT ck_persona_dni CHECK (
+        dni BETWEEN 1000000 AND 99999999
+    )
+);
+GO
+
+-- Se añadió la columna de fecha para las pruebas
+ALTER TABLE rrhh.persona
+ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
+GO
