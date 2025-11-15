@@ -70,3 +70,133 @@ ALTER TABLE relevamiento.escuela_info_json
 ADD CONSTRAINT CK_escuela_info_isjson CHECK (ISJSON(info_relevamiento) > 0);
 GO
 
+
+--TAREA 2: Insertar datos en formato JSON
+
+-- Insertar datos de escuelas con informacion de infraestructura en JSON
+INSERT INTO relevamiento.escuela_info_json (id_escuela, anio, info_relevamiento)
+SELECT 
+    e.id_escuela,
+    2024 AS anio,
+    JSON_QUERY(
+        CONCAT(
+            '{"CUE": "', e.cue, '", ',
+            '"Nombre": "', e.nombre, '", ',
+            '"Zona": "', z.descripcion, '", ',
+            '"Categoria": "', c.descripcion, '", ',
+            '"Turno": "', t.descripcion, '", ',
+            '"Modalidad": "', m.descripcion, '", ',
+            '"Servicio_Comida": "', sc.nombre, '", ',
+            '"Infraestructura": {',
+                '"Total_Aulas": 12, ',
+                '"Aulas_Con_Proyector": 8, ',
+                '"Laboratorio_Informatica": 1, ',
+                '"Biblioteca": 1, ',
+                '"Gimnasio": 1',
+            '}, ',
+            '"Conectividad": {',
+                '"Tipo": "Fibra Optica", ',
+                '"Velocidad_Mbps": 100, ',
+                '"Proveedor": "Telecom"',
+            '}, ',
+            '"Estado_Edilicio": "Bueno"}'
+        )
+    ) AS info_relevamiento
+FROM institucional.escuela e
+JOIN institucional.zona z ON e.id_zona = z.id_zona
+JOIN institucional.categoria c ON e.id_categoria = c.id_categoria
+JOIN institucional.turno t ON e.id_turno = t.id_turno
+JOIN institucional.modalidad m ON e.id_modalidad = m.id_modalidad
+JOIN institucional.servicio_comida sc ON e.id_serv_comida = sc.id_serv_comida
+WHERE e.id_escuela IN (1, 2, 3); -- Insertar para las primeras 3 escuelas
+GO
+
+-- Insertar datos adicionales con estructura diferente (proyectos especiales)
+INSERT INTO relevamiento.escuela_info_json (id_escuela, anio, info_relevamiento)
+VALUES 
+(1, 2024, N'{
+    "Proyectos": [
+        {"Nombre": "Robotica", "Participantes": 45, "Presupuesto": 50000},
+        {"Nombre": "Huerta Escolar", "Participantes": 60, "Presupuesto": 15000}
+    ],
+    "Equipamiento": {
+        "Notebooks": 25,
+        "PcEscritorio": 15,
+        "Tablets": 30,
+        "Proyectores": 8
+    }
+}');
+GO
+
+--Operaciones de actualizacion con JSON_MODIFY
+
+-- Actualizacion 1: Modificar un campo especifico (aumentar velocidad de internet)
+UPDATE relevamiento.escuela_info_json
+SET info_relevamiento = JSON_MODIFY(
+    info_relevamiento, 
+    '$.Conectividad.Velocidad_Mbps', 
+    200
+)
+WHERE id_escuela = 1 AND ISJSON(info_relevamiento) > 0;
+GO
+
+-- Actualizacion 2: Cambiar estado edificio segun zona
+UPDATE relevamiento.escuela_info_json
+SET info_relevamiento = JSON_MODIFY(
+    info_relevamiento,
+    '$.Estado_Edilicio',
+    CASE 
+        WHEN JSON_VALUE(info_relevamiento, '$.Zona') LIKE '%Rural%' THEN 'Regular - Requiere Mantenimiento'
+        WHEN JSON_VALUE(info_relevamiento, '$.Zona') LIKE '%Urbana Central%' THEN 'Muy Bueno'
+        ELSE 'Bueno'
+    END
+)
+WHERE ISJSON(info_relevamiento) > 0;
+GO
+
+-- Actualizacion 3: Agregar nueva propiedad (WiFi cobertura)
+UPDATE relevamiento.escuela_info_json
+SET info_relevamiento = JSON_MODIFY(
+    info_relevamiento, 
+    '$.Conectividad.WiFi_Cobertura_Porcentaje', 
+    95
+)
+WHERE id_escuela = 1;
+GO
+
+-- Actualizacion 4: Modificar multiples campos anidados
+UPDATE relevamiento.escuela_info_json
+SET info_relevamiento = JSON_MODIFY(
+    JSON_MODIFY(
+        info_relevamiento,
+        '$.Infraestructura.Total_Aulas',
+        15  -- Aumentar aulas
+    ),
+    '$.Infraestructura.Aulas_Con_Proyector',
+    12  -- Aumentar proyectores
+)
+WHERE id_escuela = 1;
+GO
+
+--Operaciones de BORRADO
+
+-- Borrado 1: Eliminar una propiedad del JSON (establecer en NULL)
+UPDATE relevamiento.escuela_info_json
+SET info_relevamiento = JSON_MODIFY(
+    info_relevamiento, 
+    '$.Conectividad.WiFi_Cobertura_Porcentaje', 
+    NULL
+)
+WHERE id_escuela = 1;
+GO
+
+-- Borrado 2: Eliminar un registro completo
+-- Primero insertar un registro temporal
+INSERT INTO relevamiento.escuela_info_json (id_escuela, anio, info_relevamiento)
+VALUES (1, 2023, N'{"Temporal": true, "Dato": "Para eliminar"}');
+GO
+
+-- Ahora eliminarlo
+DELETE FROM relevamiento.escuela_info_json 
+WHERE JSON_VALUE(info_relevamiento, '$.Temporal') = 'true';
+GO
