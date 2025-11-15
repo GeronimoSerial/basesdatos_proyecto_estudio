@@ -1,5 +1,3 @@
-USE Proyecto_final_2025;
-
 /*
 ===================================================================================
 TAREA 1: SCRIPT DE CARGA AUTOMATIZADA (1 MILLÓN DE FILAS) EN LA TABLA rrhh.persona
