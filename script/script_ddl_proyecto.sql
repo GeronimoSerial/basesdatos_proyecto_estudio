@@ -1,7 +1,13 @@
+CREATE DATABASE Proyecto_final_2025;
+USE Proyecto_final_2025;
+
 -- =========================
 -- GEOGRAFÍA
 -- =========================
-CREATE SCHEMA IF NOT EXISTS geografia;
+IF SCHEMA_ID('geografia') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA geografia');
+END
 GO
 
 CREATE TABLE geografia.provincia (
@@ -42,7 +48,10 @@ GO
 -- =========================
 -- INFRAESTRUCTURA
 -- =========================
-CREATE SCHEMA IF NOT EXISTS infraestructura;
+IF SCHEMA_ID('infraestructura') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA infraestructura');
+END
 GO
 
 CREATE TABLE infraestructura.edificio (
@@ -94,7 +103,10 @@ GO
 -- =========================
 -- RRHH
 -- =========================
-CREATE SCHEMA IF NOT EXISTS rrhh;
+IF SCHEMA_ID('rrhh') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA rrhh');
+END
 GO
 
 CREATE TABLE rrhh.persona (
@@ -124,7 +136,10 @@ GO
 -- =========================
 -- INSTITUCIONAL
 -- =========================
-CREATE SCHEMA IF NOT EXISTS institucional;
+IF SCHEMA_ID('institucional') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA institucional');
+END
 GO
 
 CREATE TABLE institucional.servicio_comida (
@@ -196,7 +211,10 @@ GO
 -- =========================
 -- Cargos
 -- =========================
-CREATE SCHEMA IF NOT EXISTS vacantes;
+IF SCHEMA_ID('vacantes') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA vacantes');
+END
 GO
 
 CREATE TABLE vacantes.cargo (
@@ -206,7 +224,8 @@ CREATE TABLE vacantes.cargo (
     descripcion VARCHAR(100),
     id_rol INT NOT NULL,
     codigo_display AS (
-        FORMAT(prefijo, '00') + '-' + FORMAT(sufijo, '000')
+        RIGHT('00' + CONVERT(VARCHAR(2), prefijo), 2) + '-' + 
+        RIGHT('000' + CONVERT(VARCHAR(3), sufijo), 3)
     ) PERSISTED,
     CONSTRAINT uq_cargo_prefijo_sufijo UNIQUE (prefijo, sufijo),
     CONSTRAINT pk_cargo PRIMARY KEY (id_cargo),
@@ -220,7 +239,8 @@ CREATE TABLE vacantes.plaza (
     prefijo INT NOT NULL,
     sufijo INT NOT NULL,
     codigo_display AS (
-        FORMAT(prefijo, '00') + '-' + FORMAT(sufijo, '000')
+        RIGHT('00' + CONVERT(VARCHAR(2), prefijo), 2) + '-' + 
+        RIGHT('000' + CONVERT(VARCHAR(3), sufijo), 3)
     ) PERSISTED,
     descripcion VARCHAR(150),
     id_turno INT NOT NULL,
@@ -242,8 +262,11 @@ CREATE INDEX ix_plaza_escuela_cargo ON vacantes.plaza (id_escuela, id_cargo);
 GO
 
 
-CREATE SCHEMA IF NOT EXISTS supervision;
-GO
+IF SCHEMA_ID('supervision') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA supervision');
+END
+GO -- HASTA ACA EJECUTE
 
 CREATE TABLE supervision.supervisor_escuela (
     id_persona INT NOT NULL,
@@ -262,7 +285,10 @@ CREATE INDEX idx_se_por_persona ON supervision.supervisor_escuela (id_persona);
 GO
 
 
-CREATE SCHEMA IF NOT EXISTS relevamiento;
+IF SCHEMA_ID('relevamiento') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA relevamiento');
+END
 GO
 
 CREATE TABLE relevamiento.problematica (
@@ -283,7 +309,10 @@ CREATE TABLE relevamiento.escuela_problematica (
 GO
 
 
-CREATE SCHEMA IF NOT EXISTS programas;
+IF SCHEMA_ID('programas') IS NULL
+BEGIN
+    EXEC('CREATE SCHEMA programas');
+END
 GO
 
 CREATE TABLE programas.programa_acompanamiento (
