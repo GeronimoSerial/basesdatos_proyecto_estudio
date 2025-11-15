@@ -1,7 +1,3 @@
-# 🚀 Proyecto de Optimización de Índices en SQL Server
-
-Este proyecto demuestra el impacto de diferentes estrategias de indexación en una consulta con un gran volumen de datos.
-
 ## Tarea 1: Carga de Datos
 
 [cite_start]El objetivo fue poblar la tabla `rrhh.persona` con 1 millón de registros[cite: 3]. [cite_start]Esta tabla se eligió por ser una tabla padre y por contener el campo `created_at` (DATETIMEOFFSET) sin índice, ideal para las pruebas[cite: 3, 4].
@@ -64,3 +60,4 @@ Este proyecto demuestra el impacto de diferentes estrategias de indexación en u
 ### Anexos: Scripts y Planes de Ejecución
 
 *(Aquí es donde deberás insertar tus imágenes y bloques de código)*
+
