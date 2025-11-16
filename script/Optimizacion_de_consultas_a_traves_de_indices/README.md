@@ -1,6 +1,6 @@
 # Tema: Optimización de Consultas a Través de Índices
 
-El objetivo de este proyecto fue analizar y cuantificar el impacto en el rendimiento de diferentes estrategias de indexación en SQL Server. Para ello, se realizaron pruebas de consulta sobre una tabla poblada con un gran volumen de datos (1 millón de registros), simulando un escenario realista donde la optimización de consultas es fundamental.
+El objetivo de este tema fue analizar y medir el impacto en el rendimiento de diferentes estrategias de indexación en SQL Server. Para ello, se realizaron pruebas de consulta sobre una tabla poblada con un gran volumen de datos (1 millón de registros), simulando un escenario realista donde la optimización de consultas es fundamental.
 
 ## 1. Configuración del Entorno de Pruebas
 
@@ -194,3 +194,4 @@ Total execution time: 00:00:00.022
 Luego de haber puesto a prueba los tres métodos de consulta, se demuestra una diferencia clave en la eficiencia y el tiempo de respuesta. Los resultados de las pruebas (para un periodo de 1 mes) nos dejan un claro aprendizaje sobre como la estrategia de acceso a los datos impacta en el rendimiento.
 
 La lección principal es que no basta con "crear un índice". Debemos diseñar los índices basándonos en cómo se consultarán los datos. La diferencia entre un Scan (leer todo) y un Seek (búsqueda directa) es la clave para que una consulta pase de ser lenta e ineficiente a ser rápida y escalable. El índice de cobertura (Prueba 3) resultó ser teórica y prácticamente el más eficiente para esta consulta específica.
+
