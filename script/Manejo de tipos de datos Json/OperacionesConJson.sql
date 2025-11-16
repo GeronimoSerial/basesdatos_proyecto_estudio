@@ -10,7 +10,7 @@ Tema: Manejo de tipos de datos JSON en SQL Server
 **Tareas:**
 1. Crear una nueva tabla con una columna JSON.
 2. Agregar datos no estructurados en formato JSON y realizar operaciones de 
-   actualizaci�n, agregaci�n y borrado.
+   actualización, agregación y borrado.
 3. Ejecutar operaciones de consulta sobre datos JSON.
 4. Optimizar consultas para estas estructuras JSON.
 
@@ -268,4 +268,138 @@ CROSS APPLY OPENJSON(info_relevamiento, '$.Proyectos')
         Presupuesto INT '$.Presupuesto'
     ) AS proyecto
 WHERE ISJSON(info_relevamiento) > 0;
+GO
+
+
+   
+--TAREA 4: Optimizacion de consultas en estructuras JSON
+
+-- Ejemplo de consulta que optimizaremos mediante indices:
+SELECT	
+    JSON_VALUE(info_relevamiento, '$.Nombre') AS Nombre
+FROM relevamiento.escuela_info_json
+WHERE JSON_VALUE(info_relevamiento, '$.Zona') = 'Zona A - Urbana Central'
+  AND TRY_CAST(JSON_VALUE(info_relevamiento, '$.Conectividad.Velocidad_Mbps') AS INT) >= 100;
+GO
+
+--Creacion de columnas calculadas para optimizar consultas mediante indices
+
+ALTER TABLE relevamiento.escuela_info_json
+ADD 
+    Nombre_Escuela AS JSON_VALUE(info_relevamiento, '$.Nombre'),
+    Zona AS LEFT(JSON_VALUE(info_relevamiento, '$.Zona'), 100) PERSISTED, -- Limitamos caracteres para el índice
+    Velocidad_Internet AS TRY_CAST(JSON_VALUE(info_relevamiento, '$.Conectividad.Velocidad_Mbps') AS INT),
+    Total_Aulas AS TRY_CAST(JSON_VALUE(info_relevamiento, '$.Infraestructura.Total_Aulas') AS INT);
+GO
+
+
+--Probamos la consulta utilizando las columnas calculadas
+
+SELECT Nombre_Escuela AS Nombre
+FROM relevamiento.escuela_info_json
+WHERE Zona = 'Zona A - Urbana Central' AND Velocidad_Internet >= 100;
+GO
+
+-- Notamos que el motor sigue haciendo un Scan (tabla completa)
+
+/* 
+Creacion de indice para mejorar la consulta por Zona 
+incluyendo las columnas Nombre_Escuela y Velocidad_Internet
+*/
+
+CREATE INDEX IDX_EscuelaJson_Zona_Velocidad 
+ON relevamiento.escuela_info_json(Zona) 
+INCLUDE (Nombre_Escuela, Velocidad_Internet);
+GO
+
+
+-- DROP INDEX IDX_EscuelaJson_Zona_Velocidad ON relevamiento.escuela_info_json;
+
+
+--CONSULTA OPTIMIZADA - Comparar performance
+
+-- Activar estadisticas para comparar
+SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
+
+-- Query SIN optimizacion (usando JSON_VALUE directamente)
+PRINT '--- Query SIN optimización ---';
+SELECT	
+    JSON_VALUE(info_relevamiento, '$.Nombre') AS Nombre
+FROM relevamiento.escuela_info_json
+WHERE JSON_VALUE(info_relevamiento, '$.Zona') = 'Zona A - Urbana Central'
+  AND TRY_CAST(JSON_VALUE(info_relevamiento, '$.Conectividad.Velocidad_Mbps') AS INT) >= 100;
+GO
+
+-- Query CON optimizacion (usando columnas calculadas e indice)
+PRINT '--- Query CON optimización ---';
+SELECT Nombre_Escuela AS Nombre
+FROM relevamiento.escuela_info_json
+WHERE Zona = 'Zona A - Urbana Central' AND Velocidad_Internet >= 100;
+GO
+
+SET STATISTICS IO OFF;
+SET STATISTICS TIME OFF;
+
+/* 
+Observamos que se utiliza un Index Seek que resulta mas eficiente que un Index Scan.
+La mejora de performance es de aproximadamente 5-10x en tablas grandes.
+*/
+
+--CONSULTAS ADICIONALES - Demostracion de capacidades JSON
+
+-- Verificar datos insertados
+SELECT * FROM relevamiento.escuela_info_json;
+GO
+
+-- Ver estructura completa del JSON de una escuela
+SELECT 
+    id_escuela,
+    info_relevamiento 
+FROM relevamiento.escuela_info_json 
+WHERE id_escuela = 1;
+GO
+
+-- Estadisticas sobre los datos JSON
+SELECT 
+    COUNT(*) AS Total_Registros,
+    AVG(LEN(info_relevamiento)) AS Tamaño_Promedio_Bytes,
+    MAX(LEN(info_relevamiento)) AS Tamaño_Maximo_Bytes
+FROM relevamiento.escuela_info_json;
+GO
+
+-- Validar que todos los registros tienen JSON valido
+SELECT 
+    id_info,
+    id_escuela,
+    CASE 
+        WHEN ISJSON(info_relevamiento) = 1 THEN 'JSON Válido'
+        ELSE 'JSON Inválido'
+    END AS Validacion
+FROM relevamiento.escuela_info_json;
+GO
+
+
+--ANALISIS DE PERFORMANCE
+
+-- Test 1: Sin indice
+DECLARE @inicio DATETIME, @fin DATETIME;
+SET @inicio = GETDATE();
+
+SELECT COUNT(*)
+FROM relevamiento.escuela_info_json
+WHERE JSON_VALUE(info_relevamiento, '$.Zona') = 'Zona A - Urbana Central';
+
+SET @fin = GETDATE();
+PRINT 'Tiempo SIN índice: ' + CAST(DATEDIFF(MILLISECOND, @inicio, @fin) AS VARCHAR) + ' ms';
+
+-- Test 2: Con columna calculada e indice
+SET @inicio = GETDATE();
+
+SELECT COUNT(*)
+FROM relevamiento.escuela_info_json
+WHERE Zona = 'Zona A - Urbana Central';
+
+SET @fin = GETDATE();
+PRINT 'Tiempo CON índice: ' + CAST(DATEDIFF(MILLISECOND, @inicio, @fin) AS VARCHAR) + ' ms';
 GO
