@@ -4,9 +4,6 @@ TAREA 1: SCRIPT DE CARGA AUTOMATIZADA (1 MILLÓN DE FILAS) EN LA TABLA rrhh.pers
 ===================================================================================
 */
 
--- Desactiva el mensaje "filas afectadas" para acelerar
-SET NOCOUNT ON; 
-
 -- Tabla temporal de Nombres
 DECLARE @Nombres TABLE (id INT IDENTITY(1,1) PRIMARY KEY, nombre VARCHAR(50));
 INSERT INTO @Nombres (nombre) VALUES
@@ -74,8 +71,6 @@ END
             
 -- Confirmamos la transacción
 COMMIT TRANSACTION;
-            
-SET NOCOUNT OFF;
 
 -- Verificamos el conteo final
 SELECT COUNT(*) AS TotalFilas_En_rrhh_persona FROM rrhh.persona;
@@ -116,8 +111,6 @@ ALTER TABLE rrhh.persona DROP CONSTRAINT pk_persona;
 
 CREATE CLUSTERED INDEX IX_persona_created_at_CLUSTEREADO
 ON rrhh.persona (created_at);
-
-PRINT '¡Índice agrupado creado con éxito!';
 
 SELECT 
     dni, 
@@ -167,6 +160,7 @@ WHERE
 
 DROP INDEX IX_persona_created_at_COBERTURA ON rrhh.persona;
 
+-- Limpiar la cache
 DBCC FREEPROCCACHE;
 DBCC DROPCLEANBUFFERS;
 
