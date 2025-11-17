@@ -62,7 +62,7 @@ Este sistema, al integrarse en la administración del Consejo General de Educaci
 
 El uso de tecnologías como SQL Server no solo optimiza la gestión interna, sino que también facilita la creación de políticas públicas basadas en evidencia. Un sistema bien estructurado, con una base de datos relacional e histórica, permite al Consejo analizar la evolución del sistema educativo, identificar tendencias y asignar recursos de manera eficiente. Además, la capacidad de acceder a datos fiables en tiempo real facilita la toma de decisiones informadas, lo que impulsa el desarrollo regional y la mejora continua del servicio educativo.
 
-# CAPÍTULO III: METODOLOGÍA SEGUIDA
+## CAPÍTULO III: METODOLOGÍA SEGUIDA
 
 ## Fases del Desarrollo
 
