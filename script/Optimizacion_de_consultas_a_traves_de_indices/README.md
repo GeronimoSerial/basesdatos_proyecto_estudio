@@ -1,10 +1,12 @@
 # Tema: Optimización de Consultas a Través de Índices
 
+## 1. Introducción
+
 El objetivo de este tema fue analizar y medir el impacto en el rendimiento de diferentes estrategias de indexación en SQL Server. Para ello, se realizaron pruebas de consulta sobre una tabla poblada con un gran volumen de datos (1 millón de registros), simulando un escenario realista donde la optimización de consultas es fundamental.
 
-## 1. Configuración del Entorno de Pruebas
+## 2. Configuración del Entorno de Pruebas
 
-### 1.1. Definición de la Tabla
+### 2.1. Definición de la Tabla
 
 Se utilizó la tabla `rrhh.persona`. La estructura inicial se creó con el siguiente script:
 
@@ -33,7 +35,7 @@ ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
 GO
 ```
 
-### 1.2. Carga de Datos
+### 2.2. Carga de Datos
 
 Para poblar la tabla, se ejecutó un script T-SQL con un bucle WHILE para insertar 1 millón de filas únicas. Esto aseguró un volumen de datos suficiente y una distribución aleatoria de fechas en la columna created_at.
 
@@ -107,9 +109,9 @@ END
 COMMIT TRANSACTION;
 ```
 
-## 2. Pruebas Realizadas y Análisis
+## 3. Pruebas Realizadas y Análisis
 
-### 2.1. Prueba 1: (Sin Índice)
+### 3.1. Prueba 1: (Sin Índice)
 ```sql
 SELECT 
     dni, 
@@ -132,7 +134,7 @@ Total execution time: 00:00:00.061
 
 - Análisis del Plan de Ejecución: El motor de SQL Server realizó un Clustered Index Scan. Esto significa que tuvo que leer la tabla entera (el millón de filas) para encontrar las 4,077 que cumplían la condición. Fue la operación más costosa (98% del costo) y es altamente ineficiente.
 
-### 2.2. Prueba 2: Con Índice Agrupado (Clustered Index)
+### 3.2. Prueba 2: Con Índice Agrupado (Clustered Index)
 
 ```sql
 CREATE CLUSTERED INDEX IX_persona_created_at_CLUSTEREADO
@@ -160,7 +162,7 @@ Total execution time: 00:00:00.026
 
 - Análisis del Plan de Ejecución: El plan cambió a un Clustered Index Seek. Gracias a que la tabla se reordenó físicamente por fecha, el motor pudo "saltar" directamente al inicio del rango de mayo 2020 y leer solo las filas necesarias. El tiempo de respuesta mejoró en más de un 50% (de 61ms a 26ms).
 
-### 2.3. Prueba 3: Con Índice de Cobertura (Non-Clustered + INCLUDE)
+### 3.3. Prueba 3: Con Índice de Cobertura (Non-Clustered + INCLUDE)
 
 ```sql
 CREATE NONCLUSTERED INDEX IX_persona_created_at_COBERTURA 
@@ -189,9 +191,10 @@ Total execution time: 00:00:00.022
 
 - Análisis del Plan de Ejecución: Este fue el escenario más rápido. El plan utilizó un Index Seek (similar a la Prueba 2) pero con una ventaja clave: el índice ya contenía todas las columnas solicitadas por el SELECT (gracias al INCLUDE). El motor ni siquiera tuvo que tocar la tabla principal (rrhh.persona); obtuvo todos los datos directamente de la estructura del índice, logrando la optimización ideal.
 
-## 3. Conclusiones
+## 4. Conclusiones
 
 Luego de haber puesto a prueba los tres métodos de consulta, se demuestra una diferencia clave en la eficiencia y el tiempo de respuesta. Los resultados de las pruebas (para un periodo de 1 mes) nos dejan un claro aprendizaje sobre como la estrategia de acceso a los datos impacta en el rendimiento.
 
 La lección principal es que no basta con "crear un índice". Debemos diseñar los índices basándonos en cómo se consultarán los datos. La diferencia entre un Scan (leer todo) y un Seek (búsqueda directa) es la clave para que una consulta pase de ser lenta e ineficiente a ser rápida y escalable. El índice de cobertura (Prueba 3) resultó ser teórica y prácticamente el más eficiente para esta consulta específica.
+
 
