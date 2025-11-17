@@ -326,5 +326,3 @@ EXEC sp_helptext 'contarProblematicasEscuela';
 -  Integración natural con SQL
 
 ---
-
-## Conclusión
