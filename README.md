@@ -179,4 +179,56 @@ En este tema, exploraremos la herramienta fundamental para acelerar el rendimien
 En este tema, exploraremos cómo integrar datos semi-estructurados dentro del modelo relacional. Veremos el uso de funciones nativas para almacenar, consultar y manipular documentos JSON, analizando cómo extraer valores, modificar datos y combinar la flexibilidad de JSON con la potencia de las consultas SQL tradicionales.
 
 **Documentación completa del tema:** [Manejo de tipos de datos JSON](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/tree/main/script/Manejo%20de%20tipos%20de%20datos%20Json)
+---
 
+## CAPÍTULO V: CONCLUSIONES
+
+El desarrollo de este trabajo práctico nos permitio demostrar la importancia y el impacto de una correcta estructura y diseño de bases de datos en la gestión de información crítica para el sistema educativo provincial. A lo largo de las diferentes fases del proyecto, se lograron cumplir los objetivos planteados, destacando la eficiencia en la administración de datos clave como la gestión de permisos de usuarios, optimización de consultas, automatización de procesos mediante procedimientos almacenados y la integración de datos semi-estructurados con JSON.
+
+El manejo de permisos a nivel de usuarios fue una pieza fundamental para garantizar la seguridad de la información del sistema de relevamiento educativo, permitiendo un control sobre qué acciones pueden realizar los diferentes roles (directores, supervisores, personal administrativo) en la base de datos. La implementación de esquemas separados y roles jerárquicos proporcionó una estructura de seguridad robusta y escalable.
+
+En cuanto a la optimización de consultas mediante índices, se logró mejorar el rendimiento de las operaciones de búsqueda y acceso a los datos. Se demostró que los índices clustered y non-clustered bien implementados no solo reducen el tiempo de respuesta de las consultas, sino que también optimizan el uso de los recursos del sistema. Las pruebas realizadas mostraron mejoras en el tiempo de ejecución de consultas frecuentes sobre tablas de escuelas y personal.
+
+Por otro lado, los procedimientos y funciones almacenadas permitieron una mayor modularidad y eficiencia en la ejecución de tareas repetitivas y complejas, lo que se tradujo en un sistema más robusto y fácil de mantener. La implementación de procedimientos almacenados para operaciones CRUD y funciones reutilizables facilitó la encapsulación de la lógica de negocio directamente en la base de datos, mejorando la seguridad y reduciendo la carga de procesamiento en la capa de aplicación.
+
+El manejo de tipos de datos JSON permitió integrar información variable y semi-estructurada (como datos de infraestructura tecnológica y proyectos educativos) dentro del modelo relacional tradicional. La implementación de columnas calculadas persistentes y la optimización mediante índices sobre campos JSON demostraron que es posible combinar la flexibilidad de JSON con el rendimiento de las bases de datos relacionales, logrando mejoras de performance en consultas sobre datos JSON.
+
+La correcta implementación de estos conceptos permitió alcanzar una solución eficiente, segura y escalable, alineada con los objetivos propuestos. Este proyecto no solo nos ayudó a consolidar los conocimientos de la asignatura Bases de Datos I, sino que también nos mostró la relevancia de una administración cuidadosa y planificada de las bases de datos en entornos reales con impacto en la gestión pública educativa.
+
+---
+
+## CAPÍTULO VI: BIBLIOGRAFÍA
+
+Material de lectura/consulta que se utilizó para el desarrollo del trabajo.
+
+1. Función GETDATE (Transact-SQL)  
+   [https://learn.microsoft.com/en-us/sql/t-sql/functions/getdate-transact-sql?view=sql-server-ver16](https://learn.microsoft.com/en-us/sql/t-sql/functions/getdate-transact-sql?view=sql-server-ver16)
+
+2. Crear un Procedimiento Almacenado  
+   [https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures/create-a-stored-procedure?view=sql-server-ver16](https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures/create-a-stored-procedure?view=sql-server-ver16)
+
+3. Permisos (Motor de Base de Datos) 
+   [https://learn.microsoft.com/es-es/sql/relational-databases/security/permissions-database-engine?view=sql-server-ver16](https://learn.microsoft.com/es-es/sql/relational-databases/security/permissions-database-engine?view=sql-server-ver16)
+
+4. Transacciones (Transact-SQL)
+   [https://learn.microsoft.com/es-es/sql/t-sql/language-elements/transactions-transact-sql?view=sql-server-ver16](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/transactions-transact-sql?view=sql-server-ver16)
+
+5. Procedimientos Almacenados (Motor de Base de Datos)  
+   [https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures/stored-procedures-database-engine?view=sql-server-ver16](https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures/stored-procedures-database-engine?view=sql-server-ver16)
+
+6. Datos JSON en SQL Server
+   [https://docs.microsoft.com/sql/relational-databases/json/json-data-sql-server](https://docs.microsoft.com/sql/relational-databases/json/json-data-sql-server)
+
+### Herramientas de Modelado
+
+- ERD Plus (Online Database Modeling Tool)  
+  [https://erdplus.com/](https://erdplus.com/)
+
+### Material de la Asignatura
+
+- Apuntes de clase - Bases de Datos I  
+  Cátedra Prof. Villegas Darío  
+  Facultad de Ciencias Exactas - UNNE
+
+- Guía de Elaboración de Proyecto de Estudio e Investigación  
+  Base de Datos I - Licenciatura en Sistemas de Información - UNNE
