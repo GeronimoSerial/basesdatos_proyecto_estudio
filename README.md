@@ -47,3 +47,17 @@ Para alcanzar el objetivo general, se plantean los siguientes resultados particu
 - Reducir significativamente el tiempo administrativo dedicado por el personal de las instituciones a la carga del relevamiento anual.
 - Mejorar la consistencia e integridad de la información recopilada, minimizando los errores de carga manual derivados de la reinserción de datos ya existentes.
 - Establecer un registro histórico único por institución que facilite la consulta y el análisis de la evolución de los datos a lo largo del tiempo (excluyendo matrícula).
+
+## CAPÍTULO II: MARCO CONCEPTUAL O REFERENCIAL
+
+En la actualidad, resulta impensable para una administración pública moderna gestionar sus políticas educativas sin el uso de tecnologías de la información. Estas han permitido a los ministerios y consejos de educación automatizar procesos clave como la recolección de datos censales, el seguimiento de indicadores y la gestión de recursos institucionales, lo que mejora significativamente la eficiencia operativa, reduce la carga administrativa sobre las escuelas y aumenta la calidad y fiabilidad de la información para la toma de decisiones.
+
+Aunque el factor humano (directivos y secretarios) sigue siendo esencial para validar la veracidad de la información, la tendencia hacia la automatización de la persistencia de datos es cada vez más fuerte. En el pasado, herramientas como formularios digitales simples (Google Forms) obligaban a reiniciar la carga de datos cada año. En el futuro, la estructura de la recolección de datos cambia drásticamente, adoptando sistemas que "recuerdan" la información y solo solicitan las actualizaciones.
+
+En este contexto, el uso de SQL Server, un motor de bases de datos relacionales, juega un papel fundamental. Este Sistema de Gestión de Información (SGI) permite almacenar y procesar grandes volúmenes de datos relacionados con la operación de las escuelas (información institucional, de funcionamiento, infraestructura, etc.) de manera eficiente, organizada y persistente.
+
+Nuestro caso de estudio utiliza SQL Server como el motor de este SGI, estructurando la información en tablas interrelacionadas. Entre las principales tablas que forman parte del sistema se encuentran las de Instituciones (datos únicos y permanentes como CUE, nombre, domicilio), Datos de Funcionamiento (información que se actualiza anualmente, como oferta pedagógica o servicios) y un Registro Histórico. Cada tabla está diseñada para almacenar datos de manera eficiente, lo que facilita la gestión del relevamiento anual y la consulta histórica.
+
+Este sistema, al integrarse en la administración del Consejo General de Educación, no solo permite una gestión más eficiente del proceso de carga, sino que también agiliza la toma de decisiones estratégicas. En nuestro caso, SQL Server provee una infraestructura robusta que permite acceder y gestionar la información de forma ágil, segura y escalable, lo cual es crucial en la operación anual de relevamiento.
+
+El uso de tecnologías como SQL Server no solo optimiza la gestión interna, sino que también facilita la creación de políticas públicas basadas en evidencia. Un sistema bien estructurado, con una base de datos relacional e histórica, permite al Consejo analizar la evolución del sistema educativo, identificar tendencias y asignar recursos de manera eficiente. Además, la capacidad de acceder a datos fiables en tiempo real facilita la toma de decisiones informadas, lo que impulsa el desarrollo regional y la mejora continua del servicio educativo.
