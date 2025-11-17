@@ -61,3 +61,82 @@ Nuestro caso de estudio utiliza SQL Server como el motor de este SGI, estructura
 Este sistema, al integrarse en la administración del Consejo General de Educación, no solo permite una gestión más eficiente del proceso de carga, sino que también agiliza la toma de decisiones estratégicas. En nuestro caso, SQL Server provee una infraestructura robusta que permite acceder y gestionar la información de forma ágil, segura y escalable, lo cual es crucial en la operación anual de relevamiento.
 
 El uso de tecnologías como SQL Server no solo optimiza la gestión interna, sino que también facilita la creación de políticas públicas basadas en evidencia. Un sistema bien estructurado, con una base de datos relacional e histórica, permite al Consejo analizar la evolución del sistema educativo, identificar tendencias y asignar recursos de manera eficiente. Además, la capacidad de acceder a datos fiables en tiempo real facilita la toma de decisiones informadas, lo que impulsa el desarrollo regional y la mejora continua del servicio educativo.
+
+# CAPÍTULO III: METODOLOGÍA SEGUIDA
+
+## Fases del Desarrollo
+
+### Fase de elección de caso de estudio
+ El caso de estudio elegido fue el **Sistema de Relevamiento Anual de Instituciones Educativas**, propuesto por un integrante que trabaja en el Consejo General de Educación. 
+ Este tema fue seleccionado porque:
+- Es un problema real con aplicación práctica inmediata
+- Permite aplicar todos los conceptos de la materia
+- Tiene complejidad suficiente para demostrar lo aprendido
+- Acceso directo a información del dominio del problema
+
+### Fase de desarrollo
+En esta fase nos coordinamos de manera que cada integrante del grupo realice un tema determinado
+
+1. **Manejo de permisos a nivel de usuarios de base de datos** - Gerónimo Serial
+2. **Procedimientos y funciones almacenadas** - Matías Lago
+3. **Optimización de consultas a través de índices** - Marcelo Escalante
+4. **Manejo de tipos de datos JSON** - Lucas Mancuello
+
+### Fase de explicación de temas
+Una vez terminados los scripts, tuvimos una reunión en la cual cada integrante del grupo explicó cómo trabajó su tema, cómo realizó su script y cualquier aspecto relevante que quisiera aportar al respecto.
+
+### Fase de pruebas
+Cuando ya se encontraba todo finalizado, realizamos un conjunto de pruebas a todo el sistema completo para corroborar que no hubiera ninguna falla o error. Testeamos todas las operaciones para contemplar todos los posibles resultados.
+
+### Fase final
+Para esta fase nos reunimos todos los integrantes y verificamos los scripts y los readme.
+Para corregir cualquier falla o error que surgiera.
+
+---
+
+## Herramientas (Instrumentos y procedimientos)
+
+En la elaboración de nuestro caso de estudio, utilizamos las siguientes herramientas:
+
+1. **ERD Plus**: Una sencilla pero potente herramienta para modelado de bases de datos, teniendo herramientas para crear diagramas relacionales, conceptuales, y código SQL. ERD Plus nos permitió modelar el esquema conceptual.
+
+3. **SQL Server Management**: Una herramienta de gestión y administración de bases de datos desarrollada por Microsoft, específicamente diseñada para trabajar con SQL Server, entre otros lenguajes.
+
+6. **WhatsApp**: Herramienta de mensajería 
+
+7. **Discord**: Plataforma de comunicación para realizar reuniones virtuales
+
+8. **Documentación oficial de Microsoft SQL Server**: Consulta constante de la documentación de SQL Server para implementar correctamente procedimientos, funciones, índices, permisos y JSON.
+
+---
+
+## Metodología de Trabajo
+
+### División de Responsabilidades
+Cada integrante asumió la responsabilidad completa de un tema específico:
+- Investigación individual del tema asignado
+- Desarrollo del script SQL correspondiente
+- Creación de documentación (README)
+- Pruebas del módulo desarrollado
+
+### Coordinación del Equipo
+- **Comunicación asíncrona**: Grupo de WhatsApp para consultas rápidas y coordinación de horarios
+- **Comunicación sincrónica**: Reuniones por Discord para revisión conjunta y resolucion de problemas
+- **Revisión cruzada**: Cada integrante revisó el trabajo de otros para asegurar calidad y consistencia
+
+### Integración de Módulos
+Una vez completados los desarrollos individuales, realizamos sesiones de integración donde:
+- Se verificó la compatibilidad entre módulos
+- Se realizaron pruebas del sistema completo
+
+---
+
+## Dificultades Encontradas
+
+Durante el desarrollo del proyecto enfrentamos algunos desafíos:
+
+1. **Coordinación de horarios**: Al tener disponibilidad limitada, adoptamos un modelo de trabajo híbrido (asíncrono + sincrónico) que funcionó bien.
+
+3. **Performance de funciones**: Las funciones de tabla tenían rendimiento inferior. Se solucionó implementando índices estratégicos y usando funciones inline cuando era posible.
+
+---
