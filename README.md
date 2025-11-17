@@ -140,3 +140,43 @@ Durante el desarrollo del proyecto enfrentamos algunos desafíos:
 3. **Performance de funciones**: Las funciones de tabla tenían rendimiento inferior. Se solucionó implementando índices estratégicos y usando funciones inline cuando era posible.
 
 ---
+
+## CAPÍTULO IV: DESARROLLO DEL TEMA
+
+En este capítulo se presentan los cuatro temas desarrollados en el proyecto. 
+Cada tema aborda un aspecto fundamental de SQL Server aplicado al Sistema de Relevamiento Educativo.
+
+---
+
+### Temas Desarrollados
+
+### 1. Manejo de permisos a nivel de usuarios de base de datos
+
+En este tema, exploraremos cómo definir, asignar y gestionar permisos de usuarios, desde los permisos básicos de lectura y escritura hasta configuraciones más avanzadas como la administración de roles e inicios de sesión.
+
+**Documentación completa del tema:** [Manejo de permisos a nivel de usuarios de base de datos](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/blob/main/script/Manejo%20de%20permisos%20a%20nivel%20de%20usuarios%20de%20base%20de%20datos/manejo_permisos.md)
+
+---
+
+### 2. Procedimientos y funciones almacenadas
+
+En este tema, exploraremos cómo encapsular la lógica de negocio directamente en la base de datos. Analizaremos la creación y uso de procedimientos almacenados (Stored Procedures) para ejecutar tareas complejas y de funciones (Functions) para devolver valores, mejorando la seguridad, el rendimiento y la reutilización del código.
+
+**Documentación completa del tema:** [Procedimientos y funciones almacenadas](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/tree/main/script/Procedimientos%20y%20funciones%20almacenadas)
+
+---
+
+### 3. Optimización de consultas a través de índices
+
+En este tema, exploraremos la herramienta fundamental para acelerar el rendimiento de las consultas. Abordaremos el diseño y la implementación de índices, analizando las diferencias clave entre índices agrupados (clustered) y no agrupados (non-clustered) y cómo el motor de base de datos los utiliza para optimizar la recuperación de datos.
+
+**Documentación completa del tema:** [Optimización de consultas a través de índices](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/tree/main/script/Optimizacion_de_consultas_a_traves_de_indices)
+
+---
+
+### 4. Manejo de tipos de datos JSON
+
+En este tema, exploraremos cómo integrar datos semi-estructurados dentro del modelo relacional. Veremos el uso de funciones nativas para almacenar, consultar y manipular documentos JSON, analizando cómo extraer valores, modificar datos y combinar la flexibilidad de JSON con la potencia de las consultas SQL tradicionales.
+
+**Documentación completa del tema:** [Manejo de tipos de datos JSON](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/tree/main/script/Manejo%20de%20tipos%20de%20datos%20Json)
+
