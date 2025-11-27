@@ -269,12 +269,12 @@ CREATE TABLE supervision.supervisor_escuela (
     id_persona INT NOT NULL,
     id_cargo INT NOT NULL,
     id_escuela INT NOT NULL,
-    id_autoridad INT NOT NULL,
+    id_autoridad INT NULL, -- CAMBIO: NULL porque la tabla normativa.autoridad no existe aún
     CONSTRAINT pk_supervisor_escuela PRIMARY KEY (id_escuela),
     CONSTRAINT fk_se_escuela FOREIGN KEY (id_escuela) REFERENCES institucional.escuela (id_escuela),
     CONSTRAINT fk_se_persona FOREIGN KEY (id_persona) REFERENCES rrhh.persona (id_persona),
-    CONSTRAINT fk_se_cargo FOREIGN KEY (id_cargo) REFERENCES vacantes.cargo (id_cargo),
-    CONSTRAINT fk_se_autoridad FOREIGN KEY (id_autoridad) REFERENCES normativa.autoridad (id_autoridad)
+    CONSTRAINT fk_se_cargo FOREIGN KEY (id_cargo) REFERENCES vacantes.cargo (id_cargo)
+    -- CONSTRAINT fk_se_autoridad FOREIGN KEY (id_autoridad) REFERENCES normativa.autoridad (id_autoridad) -- COMENTADO: tabla no existe
 );
 GO
 
@@ -434,26 +434,27 @@ ALTER TABLE infraestructura.edificio_conexion
 ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
 GO
 
+-- Las siguientes tablas no existen en este script, por lo tanto se comentan los ALTER TABLE:
 
-ALTER TABLE normativa.disposicion
-ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
-GO
-ALTER TABLE normativa.disposicion
-ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
-GO
-
-
-ALTER TABLE vacantes.vacante
-ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
-GO
-ALTER TABLE vacantes.vacante
-ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
-GO
+-- ALTER TABLE normativa.disposicion
+-- ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
+-- GO
+-- ALTER TABLE normativa.disposicion
+-- ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
+-- GO
 
 
-ALTER TABLE vacantes.asignacion
-ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
-GO
-ALTER TABLE vacantes.asignacion
-ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
-GO
+-- ALTER TABLE vacantes.vacante
+-- ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
+-- GO
+-- ALTER TABLE vacantes.vacante
+-- ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
+-- GO
+
+
+-- ALTER TABLE vacantes.asignacion
+-- ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
+-- GO
+-- ALTER TABLE vacantes.asignacion
+-- ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
+-- GO
