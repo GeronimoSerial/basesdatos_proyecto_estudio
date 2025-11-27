@@ -50,7 +50,7 @@ Para alcanzar el objetivo general, se plantean los siguientes resultados particu
 
 ## CAPÍTULO II: MARCO CONCEPTUAL O REFERENCIAL
 
-En la actualidad, resulta impensable para una administración pública moderna gestionar sus políticas educativas sin el uso de tecnologías de la información. Estas han permitido a los ministerios y consejos de educación automatizar procesos clave como la recolección de datos censales, el seguimiento de indicadores y la gestión de recursos institucionales, lo que mejora significativamente la eficiencia operativa, reduce la carga administrativa sobre las escuelas y aumenta la calidad y fiabilidad de la información para la toma de decisiones.
+En la actualidad, resulta impensable para una administración pública moderna gestionar sus políticas educativas sin el uso de tecnologías de la información. Estas permiten a los ministerios e instituciones automatizar procesos clave como la recolección de datos censales, el seguimiento de indicadores y la gestión de recursos institucionales, lo que mejora significativamente la eficiencia operativa, reduce la carga administrativa sobre las escuelas y aumenta la calidad y fiabilidad de la información para la toma de decisiones.
 
 Aunque el factor humano (directivos y secretarios) sigue siendo esencial para validar la veracidad de la información, la tendencia hacia la automatización de la persistencia de datos es cada vez más fuerte. En el pasado, herramientas como formularios digitales simples (Google Forms) obligaban a reiniciar la carga de datos cada año. En el futuro, la estructura de la recolección de datos cambia drásticamente, adoptando sistemas que "recuerdan" la información y solo solicitan las actualizaciones.
 
@@ -73,14 +73,6 @@ El uso de tecnologías como SQL Server no solo optimiza la gestión interna, sin
 - Permite aplicar todos los conceptos de la materia
 - Tiene complejidad suficiente para demostrar lo aprendido
 - Acceso directo a información del dominio del problema
-
-### Fase de desarrollo
-En esta fase nos coordinamos de manera que cada integrante del grupo realice un tema determinado
-
-1. **Manejo de permisos a nivel de usuarios de base de datos** - Gerónimo Serial
-2. **Procedimientos y funciones almacenadas** - Matías Lago
-3. **Optimización de consultas a través de índices** - Marcelo Escalante
-4. **Manejo de tipos de datos JSON** - Lucas Mancuello
 
 ### Fase de explicación de temas
 Una vez terminados los scripts, tuvimos una reunión en la cual cada integrante del grupo explicó cómo trabajó su tema, cómo realizó su script y cualquier aspecto relevante que quisiera aportar al respecto.
@@ -179,6 +171,7 @@ En este tema, exploraremos la herramienta fundamental para acelerar el rendimien
 En este tema, exploraremos cómo integrar datos semi-estructurados dentro del modelo relacional. Veremos el uso de funciones nativas para almacenar, consultar y manipular documentos JSON, analizando cómo extraer valores, modificar datos y combinar la flexibilidad de JSON con la potencia de las consultas SQL tradicionales.
 
 **Documentación completa del tema:** [Manejo de tipos de datos JSON](https://github.com/GeronimoSerial/basesdatos_proyecto_estudio/tree/main/script/Manejo%20de%20tipos%20de%20datos%20Json)
+
 ---
 
 ## CAPÍTULO V: CONCLUSIONES
