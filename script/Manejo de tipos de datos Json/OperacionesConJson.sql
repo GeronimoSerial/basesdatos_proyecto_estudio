@@ -238,7 +238,7 @@ SELECT
     JSON_VALUE(info_relevamiento, '$.Nombre') AS Escuela
 FROM relevamiento.escuela_info_json
 WHERE JSON_VALUE(info_relevamiento, '$.Zona') = 'Zona A - Urbana Central'
-  AND TRY_CAST(JSON_VALUE(info_relevamiento, '$.Conectividad.Velocidad_Mbps') AS INT) >= 100;
+  AND TRY_CAST(JSON_VALUE(info_relevamiento, '$.Conectividad.Velocida   d_Mbps') AS INT) >= 100;
 
 SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;

@@ -196,6 +196,7 @@ CREATE TABLE institucional.modalidad
 );
 GO
 
+
 CREATE TABLE institucional.escuela
 (
     cue BIGINT NOT NULL,

@@ -4,7 +4,7 @@
 
 El objetivo de este tema fue analizar y medir el impacto en el rendimiento de diferentes estrategias de indexación en SQL Server. Para ello, se realizaron pruebas de consulta sobre una tabla poblada con un gran volumen de datos (1 millón de registros), simulando un escenario realista donde la optimización de consultas es fundamental.
 
-## 2. Configuración del Entorno de Pruebas
+## 2. Configuración del entorno de pruebas
 
 ### 2.1. Definición de la Tabla
 
@@ -59,8 +59,6 @@ INSERT INTO @Apellidos (apellido) VALUES
 
 -- Iniciamos la carga de datos
 DECLARE @i INT = 1;
-DECLARE @total_nombres INT = (SELECT COUNT(*) FROM @Nombres);
-DECLARE @total_apellidos INT = (SELECT COUNT(*) FROM @Apellidos);
 
 -- Iniciamos una transacción única para máxima velocidad
 BEGIN TRANSACTION;
@@ -109,7 +107,7 @@ END
 COMMIT TRANSACTION;
 ```
 
-## 3. Pruebas Realizadas y Análisis
+## 3. Pruebas realizadas y análisis
 
 ### 3.1. Prueba 1: (Sin Índice)
 ```sql
@@ -152,7 +150,7 @@ WHERE
     AND created_at < '2020-05-31 00:00:00';
 ```
 
-- Descripción: Se eliminó la PRIMARY KEY original y se creó un nuevo Índice Agrupado directamente en la columna created_at.
+- Descripción: Se eliminó el Clustered Index de la PRIMARY KEY original y se creó un nuevo Índice Agrupado directamente en la columna created_at.
 - Resultados:
 
 ```text
