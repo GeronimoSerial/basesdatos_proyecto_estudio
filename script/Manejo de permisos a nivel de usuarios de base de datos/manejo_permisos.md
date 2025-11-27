@@ -51,11 +51,70 @@ Representa al login dentro de la base de datos y permite aplicar permisos sobre 
 
 **Usuario administrador:**
 
-```jsx
-ALTER ROLE db_owner ADD MEMBER admin_user;
+En caso de requerirse permisos directos (y no a través de un rol) se debe usar una de las siguientes estrategias:
+
+#### Opción 1: Convertir al usuario en propietario de cada schema (ownership real)
+
+Esta opción transfiere la propiedad del schema al usuario, otorgándole permisos plenos (CONTROL) sobre todos los objetos del mismo.
+
+```sql
+-- Transferir ownership de cada schema al usuario admin_user
+ALTER AUTHORIZATION ON SCHEMA::dbo TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::geografia TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::infraestructura TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::rrhh TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::institucional TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::vacantes TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::supervision TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::relevamiento TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::programas TO admin_user;
 ```
 
-Este rol otorga control total sobre la base, equivalente a un administrador. Puede realizar operaciones DDL y DML.
+**Ventajas:**
+- Control total sobre el schema y todos sus objetos
+- No requiere permisos adicionales
+
+**Consideraciones:**
+- Modifica el propietario original del schema
+- El usuario se convierte en responsable del schema
+
+#### Opción 2: Otorgar CONTROL sobre los schemas
+
+Esta alternativa otorga prácticamente los mismos permisos que la propiedad, pero sin modificar el propietario del schema.
+
+```sql
+-- Otorgar CONTROL sobre cada schema sin transferir ownership
+GRANT CONTROL ON SCHEMA::dbo TO admin_user;
+GRANT CONTROL ON SCHEMA::geografia TO admin_user;
+GRANT CONTROL ON SCHEMA::infraestructura TO admin_user;
+GRANT CONTROL ON SCHEMA::rrhh TO admin_user;
+GRANT CONTROL ON SCHEMA::institucional TO admin_user;
+GRANT CONTROL ON SCHEMA::vacantes TO admin_user;
+GRANT CONTROL ON SCHEMA::supervision TO admin_user;
+GRANT CONTROL ON SCHEMA::relevamiento TO admin_user;
+GRANT CONTROL ON SCHEMA::programas TO admin_user;
+```
+
+**Ventajas:**
+- Permisos equivalentes a owner sin cambiar la propiedad
+- Más flexible para revocar permisos posteriormente
+- Mantiene intacta la estructura de propiedad original
+
+**Permisos otorgados con CONTROL:**
+- CREATE, ALTER, DROP sobre objetos del schema
+- SELECT, INSERT, UPDATE, DELETE sobre todas las tablas
+- EXECUTE sobre procedimientos y funciones
+- Capacidad de otorgar permisos a otros usuarios (WITH GRANT OPTION)
+
+#### Comparación de alternativas
+
+| Aspecto | ALTER AUTHORIZATION | GRANT CONTROL |
+|---------|-------------------|---------------|
+| Modifica propietario | Sí | No |
+| Permisos completos | Sí | Sí |
+| Reversibilidad | Requiere cambiar owner nuevamente | REVOKE simple |
+| Recomendación | Uso en producción con responsabilidad clara | Más flexible para entornos dinámicos |
+
 
 **Usuario de solo lectura**
 
