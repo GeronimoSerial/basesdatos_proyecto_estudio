@@ -7,14 +7,16 @@ BEGIN
 END
 GO
 
-CREATE TABLE geografia.provincia (
+CREATE TABLE geografia.provincia
+(
     id_provincia INT IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     CONSTRAINT pk_provincia PRIMARY KEY (id_provincia)
 );
 GO
 
-CREATE TABLE geografia.departamento (
+CREATE TABLE geografia.departamento
+(
     id_departamento INT IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     id_provincia INT NOT NULL,
@@ -23,7 +25,8 @@ CREATE TABLE geografia.departamento (
 );
 GO
 
-CREATE TABLE geografia.localidad (
+CREATE TABLE geografia.localidad
+(
     id_localidad INT IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     id_departamento INT NOT NULL,
@@ -32,7 +35,8 @@ CREATE TABLE geografia.localidad (
 );
 GO
 
-CREATE TABLE geografia.domicilio (
+CREATE TABLE geografia.domicilio
+(
     id_domicilio INT IDENTITY(1,1) NOT NULL,
     calle VARCHAR(50) NOT NULL,
     altura INT NOT NULL,
@@ -51,7 +55,8 @@ BEGIN
 END
 GO
 
-CREATE TABLE infraestructura.edificio (
+CREATE TABLE infraestructura.edificio
+(
     id_edificio INT IDENTITY(1,1) NOT NULL,
     id_domicilio INT NOT NULL,
     CONSTRAINT pk_edificio PRIMARY KEY (id_edificio),
@@ -59,7 +64,10 @@ CREATE TABLE infraestructura.edificio (
 );
 GO
 
-CREATE TABLE infraestructura.proveedor (
+
+
+CREATE TABLE infraestructura.proveedor
+(
     id_proveedor INT IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     CONSTRAINT pk_proveedor PRIMARY KEY (id_proveedor),
@@ -67,21 +75,24 @@ CREATE TABLE infraestructura.proveedor (
 );
 GO
 
-CREATE TABLE infraestructura.tecnologia (
+CREATE TABLE infraestructura.tecnologia
+(
     id_tecnologia INT IDENTITY(1,1) NOT NULL,
     descripcion VARCHAR(50) NOT NULL,
     CONSTRAINT pk_tecnologia PRIMARY KEY (id_tecnologia)
 );
 GO
 
-CREATE TABLE infraestructura.calidad_servicio (
+CREATE TABLE infraestructura.calidad_servicio
+(
     id_calidad_servicio INT IDENTITY(1,1) NOT NULL,
     descripcion VARCHAR(50) NOT NULL,
     CONSTRAINT pk_calidad_servicio PRIMARY KEY (id_calidad_servicio)
 );
 GO
 
-CREATE TABLE infraestructura.edificio_conexion (
+CREATE TABLE infraestructura.edificio_conexion
+(
     id_edificio_conexion INT IDENTITY(1,1) NOT NULL,
     id_edificio INT NOT NULL,
     id_proveedor INT NOT NULL,
@@ -106,7 +117,8 @@ BEGIN
 END
 GO
 
-CREATE TABLE rrhh.persona (
+CREATE TABLE rrhh.persona
+(
     id_persona INT IDENTITY(1,1) NOT NULL,
     dni INT NOT NULL,
     nombre VARCHAR(50) NOT NULL,
@@ -122,7 +134,8 @@ CREATE TABLE rrhh.persona (
 );
 GO
 
-CREATE TABLE rrhh.rol (
+CREATE TABLE rrhh.rol
+(
     id_rol INT IDENTITY(1,1) NOT NULL,
     codigo VARCHAR(20) NOT NULL,
     CONSTRAINT uq_rol_codigo UNIQUE (codigo),
@@ -139,14 +152,16 @@ BEGIN
 END
 GO
 
-CREATE TABLE institucional.servicio_comida (
+CREATE TABLE institucional.servicio_comida
+(
     id_serv_comida INT IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     CONSTRAINT pk_servicio_comida PRIMARY KEY (id_serv_comida)
 );
 GO
 
-CREATE TABLE institucional.categoria (
+CREATE TABLE institucional.categoria
+(
     id_categoria INT NOT NULL,
     codigo INT NOT NULL,
     descripcion VARCHAR(100) NOT NULL,
@@ -155,7 +170,8 @@ CREATE TABLE institucional.categoria (
 );
 GO
 
-CREATE TABLE institucional.zona (
+CREATE TABLE institucional.zona
+(
     id_zona INT NOT NULL,
     codigo CHAR(1) NOT NULL,
     descripcion VARCHAR(100) NOT NULL,
@@ -164,21 +180,24 @@ CREATE TABLE institucional.zona (
 );
 GO
 
-CREATE TABLE institucional.turno (
+CREATE TABLE institucional.turno
+(
     id_turno INT IDENTITY(1,1) NOT NULL,
     descripcion VARCHAR(50),
     CONSTRAINT pk_turno PRIMARY KEY (id_turno)
 );
 GO
 
-CREATE TABLE institucional.modalidad (
+CREATE TABLE institucional.modalidad
+(
     id_modalidad INT IDENTITY(1,1) NOT NULL,
     descripcion VARCHAR(100) NOT NULL,
     CONSTRAINT pk_modalidad PRIMARY KEY (id_modalidad)
 );
 GO
 
-CREATE TABLE institucional.escuela (
+CREATE TABLE institucional.escuela
+(
     cue BIGINT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     fecha_fundacion DATE NULL,
@@ -214,10 +233,13 @@ BEGIN
 END
 GO
 
-CREATE TABLE vacantes.cargo (
+CREATE TABLE vacantes.cargo
+(
     id_cargo INT IDENTITY(1,1) NOT NULL,
-    prefijo INT NOT NULL, -- p.ej., 05
-    sufijo INT NOT NULL, -- p.ej., 328
+    prefijo INT NOT NULL,
+    -- p.ej., 05
+    sufijo INT NOT NULL,
+    -- p.ej., 328
     descripcion VARCHAR(100),
     id_rol INT NOT NULL,
     codigo_display AS (
@@ -230,7 +252,8 @@ CREATE TABLE vacantes.cargo (
 );
 GO
 
-CREATE TABLE vacantes.plaza (
+CREATE TABLE vacantes.plaza
+(
     id_plaza INT IDENTITY(1,1) NOT NULL,
     id_escuela INT NOT NULL,
     prefijo INT NOT NULL,
@@ -243,7 +266,8 @@ CREATE TABLE vacantes.plaza (
     id_turno INT NOT NULL,
     id_cargo INT NOT NULL,
     CONSTRAINT fk_plaza_escuela FOREIGN KEY (id_escuela) REFERENCES institucional.escuela (id_escuela),
-    CONSTRAINT pk_plaza PRIMARY KEY (id_plaza), -- Ver NOTA IMPORTANTE abajo
+    CONSTRAINT pk_plaza PRIMARY KEY (id_plaza),
+    -- Ver NOTA IMPORTANTE abajo
     CONSTRAINT fk_plaza_turno FOREIGN KEY (id_turno) REFERENCES institucional.turno (id_turno),
     CONSTRAINT fk_plaza_cargo FOREIGN KEY (id_cargo) REFERENCES vacantes.cargo (id_cargo),
     -- dentro de la escuela, un único código plaza (prefijo-sufijo)
@@ -263,18 +287,17 @@ IF SCHEMA_ID('supervision') IS NULL
 BEGIN
     EXEC('CREATE SCHEMA supervision');
 END
-GO -- HASTA ACA EJECUTE
+GO
 
-CREATE TABLE supervision.supervisor_escuela (
+CREATE TABLE supervision.supervisor_escuela
+(
     id_persona INT NOT NULL,
     id_cargo INT NOT NULL,
     id_escuela INT NOT NULL,
-    id_autoridad INT NULL, -- CAMBIO: NULL porque la tabla normativa.autoridad no existe aún
     CONSTRAINT pk_supervisor_escuela PRIMARY KEY (id_escuela),
     CONSTRAINT fk_se_escuela FOREIGN KEY (id_escuela) REFERENCES institucional.escuela (id_escuela),
     CONSTRAINT fk_se_persona FOREIGN KEY (id_persona) REFERENCES rrhh.persona (id_persona),
     CONSTRAINT fk_se_cargo FOREIGN KEY (id_cargo) REFERENCES vacantes.cargo (id_cargo)
-    -- CONSTRAINT fk_se_autoridad FOREIGN KEY (id_autoridad) REFERENCES normativa.autoridad (id_autoridad) -- COMENTADO: tabla no existe
 );
 GO
 
@@ -288,7 +311,8 @@ BEGIN
 END
 GO
 
-CREATE TABLE relevamiento.problematica (
+CREATE TABLE relevamiento.problematica
+(
     id_problematica INT IDENTITY(1,1) NOT NULL,
     dimension VARCHAR(50) NOT NULL,
     descripcion VARCHAR(50),
@@ -296,7 +320,8 @@ CREATE TABLE relevamiento.problematica (
 );
 GO
 
-CREATE TABLE relevamiento.escuela_problematica (
+CREATE TABLE relevamiento.escuela_problematica
+(
     id_problematica INT NOT NULL,
     id_escuela INT NOT NULL,
     CONSTRAINT pk_escuela_problematica PRIMARY KEY (id_problematica, id_escuela),
@@ -312,14 +337,16 @@ BEGIN
 END
 GO
 
-CREATE TABLE programas.programa_acompanamiento (
+CREATE TABLE programas.programa_acompanamiento
+(
     id_programa INT IDENTITY(1,1) NOT NULL,
     descripcion VARCHAR(100) NOT NULL,
     CONSTRAINT pk_programa_acompanamiento PRIMARY KEY (id_programa)
 );
 GO
 
-CREATE TABLE programas.escuela_programa (
+CREATE TABLE programas.escuela_programa
+(
     id_programa INT NOT NULL,
     id_escuela INT NOT NULL,
     CONSTRAINT pk_escuela_programa PRIMARY KEY (id_programa, id_escuela),
@@ -328,19 +355,22 @@ CREATE TABLE programas.escuela_programa (
 );
 GO
 
-CREATE TABLE relevamiento.personal_tipo (
+CREATE TABLE relevamiento.personal_tipo
+(
     id_personal_tipo INT IDENTITY(1,1) NOT NULL,
     codigo VARCHAR(20) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     id_rol INT NULL,
-    activo BIT NOT NULL DEFAULT 1, -- CAMBIO: BOOLEAN -> BIT; true -> 1
+    activo BIT NOT NULL DEFAULT 1,
+    -- CAMBIO: BOOLEAN -> BIT; true -> 1
     CONSTRAINT uq_personal_tipo_codigo UNIQUE (codigo),
     CONSTRAINT pk_personal_tipo PRIMARY KEY (id_personal_tipo),
     CONSTRAINT fk_personal_tipo_rol FOREIGN KEY (id_rol) REFERENCES rrhh.rol (id_rol)
 );
 GO
 
-CREATE TABLE relevamiento.personal (
+CREATE TABLE relevamiento.personal
+(
     id_escuela INT NOT NULL,
     anio INT NOT NULL,
     id_personal_tipo INT NOT NULL,
@@ -365,7 +395,8 @@ CREATE INDEX ix_personal_tipo ON relevamiento.personal (id_personal_tipo);
 GO
 
 
-CREATE TABLE institucional.ambito_escuela (
+CREATE TABLE institucional.ambito_escuela
+(
     id_ambito INT IDENTITY(1,1) NOT NULL,
     codigo VARCHAR(20) NOT NULL,
     activo BIT NOT NULL DEFAULT 1,
@@ -375,14 +406,15 @@ CREATE TABLE institucional.ambito_escuela (
 GO
 
 INSERT INTO
-    institucional.ambito_escuela (codigo)
+    institucional.ambito_escuela
+    (codigo)
 VALUES
     ('URBANA'),
     ('RURAL');
 GO
 
 ALTER TABLE institucional.escuela
-ADD id_ambito INT NULL;
+ADD id_ambito INT NOT NULL;
 GO
 
 ALTER TABLE institucional.escuela
@@ -393,7 +425,8 @@ ALTER TABLE vacantes.plaza
 ADD CONSTRAINT uq_plaza_id_escuela UNIQUE (id_plaza, id_escuela);
 GO
 
-CREATE TABLE institucional.director_escuela (
+CREATE TABLE institucional.director_escuela
+(
     id_director_escuela INT IDENTITY(1,1) NOT NULL,
     id_plaza INT NOT NULL,
     id_escuela INT NOT NULL,
@@ -433,28 +466,3 @@ GO
 ALTER TABLE infraestructura.edificio_conexion
 ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
 GO
-
--- Las siguientes tablas no existen en este script, por lo tanto se comentan los ALTER TABLE:
-
--- ALTER TABLE normativa.disposicion
--- ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
--- GO
--- ALTER TABLE normativa.disposicion
--- ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
--- GO
-
-
--- ALTER TABLE vacantes.vacante
--- ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
--- GO
--- ALTER TABLE vacantes.vacante
--- ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
--- GO
-
-
--- ALTER TABLE vacantes.asignacion
--- ADD created_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
--- GO
--- ALTER TABLE vacantes.asignacion
--- ADD updated_at DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET();
--- GO
