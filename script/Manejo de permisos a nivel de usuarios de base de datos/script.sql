@@ -3,7 +3,7 @@ GO
 
 --Creación de usuarios a nivel Base de datos
 --Creación de usuarios a nivel Base de datos
-´--Creación de usuarios a nivel Base de datos
+--Creación de usuarios a nivel Base de datos
 
 CREATE LOGIN admin_user WITH PASSWORD = 'admin_pass';
 
@@ -20,7 +20,15 @@ FROM sys.database_principals
 WHERE
     name IN ('admin_user', 'lector_user');
 
-ALTER ROLE db_owner ADD MEMBER admin_user;
+-- Transferir ownership de cada schema al usuario admin_user
+ALTER AUTHORIZATION ON SCHEMA::geografia TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::infraestructura TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::rrhh TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::institucional TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::vacantes TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::supervision TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::relevamiento TO admin_user;
+ALTER AUTHORIZATION ON SCHEMA::programas TO admin_user;
 
 --Permiso solo lectura para el usuario lector
 
