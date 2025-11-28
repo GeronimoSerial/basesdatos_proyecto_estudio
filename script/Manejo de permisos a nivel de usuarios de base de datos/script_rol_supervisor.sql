@@ -60,11 +60,20 @@ GO
 
 
 DENY SELECT ON institucional.escuela TO rol_supervisor;
+-- usuario a tiene permisos de lectura
+EXECUTE AS USER = 'user_a';
+GO
 
+--usuario b no tiene permisos
+EXECUTE AS USER = 'user_b';
+GO
+
+-- supervisor puede ver solamente las escuelas que le corresponden
 EXECUTE AS USER = 'supervisor_prueba';
 GO
 
-select * from institucional.escuela
+
+select nombre from institucional.escuela
 
 
 IF NOT EXISTS (SELECT *
@@ -75,6 +84,8 @@ BEGIN
 END
 GO
 
+
+
 IF NOT EXISTS (SELECT *
 FROM sys.database_principals
 WHERE name = 'supervisor_prueba')
@@ -83,17 +94,16 @@ BEGIN
 END
 GO 
 
-ALTER ROLE rol_supervisor ADD MEMBER supervisor_prueba;
-GO
+ALTER ROLE rol_supervisor ADD MEMBER user_b;
 
 -- usuarios de prueba:  fernando.castro@edu.corrientes.gob.ar miguel.torres@edu.corrientes.gob.ar
 
 
-EXEC sp_set_session_context @key = N'email_usuario', @value = 'fernando.castro@edu.corrientes.gob.ar', @read_only = 0;
+EXEC sp_set_session_context @key = N'email_usuario', @value = 'fernando.castro@edu.corrientes.gob.ar';
 SELECT nombre
 FROM institucional.v_escuelas_supervisor;
 
 
-EXEC sp_set_session_context @key = N'email_usuario', @value = 'miguel.torres@edu.corrientes.gob.ar', @read_only = 0;
+EXEC sp_set_session_context @key = N'email_usuario', @value = 'miguel.torres@edu.corrientes.gob.ar';
 SELECT nombre
 FROM institucional.v_escuelas_supervisor;
